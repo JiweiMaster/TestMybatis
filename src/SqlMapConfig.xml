@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+    <!--定义数据的属性文件-->
+    <properties resource="dataSource.properties"/>
+
+    <!--配置别名，本命规定是报名最好一个单词的小写形式-->
+    <typeAliases>
+        <!--<typeAlias type="com.test.mybatis.entity.User" alias="user"/>-->
+        <package name="com.test.mybatis.entity"/>
+        <package name="com.test.mybatis.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理器不能去掉-->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${aliCloud_driver}"/>
+                <property name="url" value="${aliCloud_url}"/>
+                <property name="username" value="${aliCloud_username}"/>
+                <property name="password" value="${aliCloud_passeord}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--使用文件的地址或者类名或者包名-->
+        <!--<mapper resource="com/test/mybatis/map/User.xml"></mapper>-->
+        <!--<mapper resource="com/test/mybatis/mapper/UserMapper.xml"></mapper>-->
+        <!--<mapper class="com.test.mybatis.mapper.UserMapper"></mapper>-->
+        <package name="com.test.mybatis.mapper"/>
+    </mappers>
+</configuration>

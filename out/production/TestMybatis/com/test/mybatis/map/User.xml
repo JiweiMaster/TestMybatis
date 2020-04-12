@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+    <select id="getUserById" parameterType="int" resultType="com.test.mybatis.entity.User">
+      select * from User where id = #{id}
+    </select>
+
+
+    <!--${value}表示表示拼接字符串,容易引起sql注入，不建议用-->
+    <select id="getUserByLikeName" parameterType="String" resultType="com.test.mybatis.entity.User">
+      select * from User where name like '%${value}%'
+    </select>
+
+    <!--插入数据，#{name} 直接写入类型的属性值就可以了，会自动去匹配User的name的属性-->
+    <insert id="insertUserInfo" parameterType="com.test.mybatis.entity.User">
+        insert into User (name,age) value (#{name},#{age})
+    </insert>
+</mapper>

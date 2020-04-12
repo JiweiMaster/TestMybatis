@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--使用Mapper的时候参数的类型变量要完全一致，
+比如是User select* 的结果里面有id，User的构造参数必须有id-->
+
+<mapper namespace="com.test.mybatis.mapper.UserMapper">
+    <!--返回值类型，如果是一样的华就用resultType，如果不一样就用resultMap,会自动创建pojo对象-->
+
+
+    <select id="getUserById" parameterType="int" resultType="user">
+      select * from User where id = #{id}
+    </select>
+
+    <!--插入数据，#{name} 直接写入类型的属性值就可以了，会自动去匹配User的name的属性-->
+    <insert id="insertUserInfo" parameterType="user">
+        insert into User (name,age) value (#{name},#{age})
+    </insert>
+
+
+    <!--单独领出sql语句的写法-->
+    <sql id="if_exist_sql">
+        <where>
+            <if test="ids != null and ids.size > 0">
+                <foreach collection="ids" item="id" open=" id in (" close=")" separator=",">
+                    ${id}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <!--选择判断语句加上foreach语句的操作-->
+    <select id="getUserByIds" parameterType="userInfoVo" resultType="user">
+        select * from User
+        <include refid="if_exist_sql"/>
+    </select>
+</mapper>
